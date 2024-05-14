@@ -48,4 +48,14 @@ public class MoviesController(IMovieRepository _movieRepository) : ControllerBas
 
         return Ok(movie.MapToResponse());
     }
+
+    [HttpDelete(ApiEndpoints.Movies.Delete)]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    {
+        bool deleted = await _movieRepository.DeleteByIdAsync(id);
+
+        if (!deleted) return NotFound();
+
+        return Ok();
+    }
 }
