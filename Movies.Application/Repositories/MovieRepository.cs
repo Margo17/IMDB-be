@@ -1,4 +1,3 @@
-using System.Net;
 using Movies.Application.Models;
 
 namespace Movies.Application.Repositories;
@@ -6,7 +5,7 @@ namespace Movies.Application.Repositories;
 public class MovieRepository : IMovieRepository
 {
     private readonly List<Movie> _movies = [];
-    
+
     public Task<bool> CreateAsync(Movie movie)
     {
         _movies.Add(movie);
@@ -29,11 +28,8 @@ public class MovieRepository : IMovieRepository
     public Task<bool> UpdateAsync(Movie movie)
     {
         int movieIndex = _movies.FindIndex(m => m.Id == movie.Id);
-        
-        if (movieIndex == -1)
-        {
-            return Task.FromResult(false);
-        }
+
+        if (movieIndex == -1) return Task.FromResult(false);
 
         _movies[movieIndex] = movie;
 
