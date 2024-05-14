@@ -16,11 +16,11 @@ public class MoviesController(IMovieRepository _movieRepository) : ControllerBas
         
         await _movieRepository.CreateAsync(movie);
 
-        return Created($"{ApiEndpoints.Movies.Create}/{movie.Id}", movie.MapToResponse());
+        return CreatedAtAction(nameof(Get), new { id = movie.Id }, movie.MapToResponse());
     }
 
     [HttpGet(ApiEndpoints.Movies.Get)]
-    public async Task<IActionResult> GetById([FromRoute]Guid id)
+    public async Task<IActionResult> Get([FromRoute]Guid id)
     {
         Movie? movie = await _movieRepository.GetByIdAsync(id);
 
