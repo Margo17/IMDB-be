@@ -1,6 +1,6 @@
-using Movies.Application.Models;
+using IMDB.Application.Models;
 
-namespace Movies.Application.Repositories;
+namespace IMDB.Application.Repositories;
 
 public class MovieRepository : IMovieRepository
 {

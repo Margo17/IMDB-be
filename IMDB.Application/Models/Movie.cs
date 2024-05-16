@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Movies.Application.Models;
+namespace IMDB.Application.Models;
 
 public partial class Movie
 {

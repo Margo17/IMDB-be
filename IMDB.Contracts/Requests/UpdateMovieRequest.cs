@@ -1,6 +1,6 @@
-namespace Movies.Contracts.Requests;
+namespace IMDB.Contracts.Requests;
 
-public class CreateMovieRequest
+public class UpdateMovieRequest
 {
     public required string Title { get; init; }
 

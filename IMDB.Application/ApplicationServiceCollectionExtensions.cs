@@ -1,7 +1,7 @@
+using IMDB.Application.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using Movies.Application.Repositories;
 
-namespace Movies.Application;
+namespace IMDB.Application;
 
 public static class ApplicationServiceCollectionExtensions
 {

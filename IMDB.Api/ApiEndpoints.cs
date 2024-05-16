@@ -1,4 +1,4 @@
-namespace Movies.Api;
+namespace IMDB.Api;
 
 public static class ApiEndpoints
 {

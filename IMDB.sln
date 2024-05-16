@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Api", "Movies.Api\Movies.Api.csproj", "{FC3F2BC0-0865-4C3C-ADB0-8CC52CDB970C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDB.Api", "IMDB.Api\IMDB.Api.csproj", "{FC3F2BC0-0865-4C3C-ADB0-8CC52CDB970C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Application", "Movies.Application\Movies.Application.csproj", "{E0326FEA-DD6C-4020-8896-3924AAF91F43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDB.Application", "IMDB.Application\IMDB.Application.csproj", "{E0326FEA-DD6C-4020-8896-3924AAF91F43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Contracts", "Movies.Contracts\Movies.Contracts.csproj", "{079EAC12-02D2-4133-87BB-4245655A8E22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDB.Contracts", "IMDB.Contracts\IMDB.Contracts.csproj", "{079EAC12-02D2-4133-87BB-4245655A8E22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

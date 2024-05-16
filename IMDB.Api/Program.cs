@@ -1,4 +1,4 @@
-using Movies.Application;
+using IMDB.Application;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

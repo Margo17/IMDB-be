@@ -1,8 +1,8 @@
-using Movies.Application.Models;
-using Movies.Contracts.Requests;
-using Movies.Contracts.Responses;
+using IMDB.Application.Models;
+using IMDB.Contracts.Requests;
+using IMDB.Contracts.Responses;
 
-namespace Movies.Api.Mapping;
+namespace IMDB.Api.Mapping;
 
 public static class ContractMapping
 {

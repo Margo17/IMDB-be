@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Movies.Api.Mapping;
-using Movies.Application.Models;
-using Movies.Application.Repositories;
-using Movies.Contracts.Requests;
+using IMDB.Api.Mapping;
+using IMDB.Application.Models;
+using IMDB.Application.Repositories;
+using IMDB.Contracts.Requests;
 
-namespace Movies.Api.Controllers;
+namespace IMDB.Api.Controllers;
 
 [ApiController]
 public class MoviesController(IMovieRepository _movieRepository) : ControllerBase
