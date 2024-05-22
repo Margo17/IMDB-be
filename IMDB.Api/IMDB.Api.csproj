@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\IMDB.Application\IMDB.Application.csproj" />
-        <ProjectReference Include="..\IMDB.Contracts\IMDB.Contracts.csproj" />
+        <ProjectReference Include="..\IMDB.Application\IMDB.Application.csproj"/>
+        <ProjectReference Include="..\IMDB.Contracts\IMDB.Contracts.csproj"/>
     </ItemGroup>
 
 </Project>

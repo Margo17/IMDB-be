@@ -18,15 +18,13 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
                                                                          """, movie));
 
         if (result is 0) return false;
-        
+
         foreach (string genre in movie.Genres)
-        {
             await connection.ExecuteAsync(new CommandDefinition("""
                                                                 insert into genres (movieId, name)
                                                                 values (@MovieId, @Name)
                                                                 """, new { MovieId = movie.Id, Name = genre }));
-        }
-        
+
         transaction.Commit();
 
         return true;
@@ -36,7 +34,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
     {
         throw new NotImplementedException();
     }
-    
+
     public Task<Movie?> GetBySlugAsync(string slug)
     {
         throw new NotImplementedException();

@@ -13,9 +13,9 @@ public class NpgsqlConnectionFactory(string _connectionString) : IDbConnectionFa
     public async Task<IDbConnection> CreateConnectionAsync()
     {
         NpgsqlConnection connection = new(_connectionString);
-        
+
         await connection.OpenAsync();
-        
+
         return connection;
     }
 }

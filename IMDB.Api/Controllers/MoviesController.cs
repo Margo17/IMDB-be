@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using IMDB.Api.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Repositories;
 using IMDB.Contracts.Requests;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IMDB.Api.Controllers;
 
@@ -40,7 +40,7 @@ public class MoviesController(IMovieRepository _movieRepository) : ControllerBas
     }
 
     [HttpPut(ApiEndpoints.Movies.Update)]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody]UpdateMovieRequest request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMovieRequest request)
     {
         Movie movie = request.MapToMovie(id);
 

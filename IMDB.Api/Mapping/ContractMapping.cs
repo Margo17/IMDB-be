@@ -16,7 +16,7 @@ public static class ContractMapping
             Genres = request.Genres.ToList()
         };
     }
-    
+
     public static Movie MapToMovie(this UpdateMovieRequest request, Guid id)
     {
         return new Movie
