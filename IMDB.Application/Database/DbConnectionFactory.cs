@@ -5,16 +5,16 @@ namespace IMDB.Application.Database;
 
 public interface IDbConnectionFactory
 {
-    Task<IDbConnection> CreateConnectionAsync();
+    Task<IDbConnection> CreateConnectionAsync(CancellationToken token = default);
 }
 
 public class NpgsqlConnectionFactory(string _connectionString) : IDbConnectionFactory
 {
-    public async Task<IDbConnection> CreateConnectionAsync()
+    public async Task<IDbConnection> CreateConnectionAsync(CancellationToken token)
     {
         NpgsqlConnection connection = new(_connectionString);
 
-        await connection.OpenAsync();
+        await connection.OpenAsync(token);
 
         return connection;
     }
