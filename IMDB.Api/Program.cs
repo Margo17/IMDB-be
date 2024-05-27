@@ -1,11 +1,33 @@
+using System.Text;
 using IMDB.Api.Mapping;
 using IMDB.Application;
 using IMDB.Application.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddAuthentication(ao =>
+{
+    ao.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    ao.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    ao.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jbo =>
+{
+    jbo.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Audience"],
+        ValidateIssuer = true,
+        ValidateAudience = true
+    };
+});
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ValidationMappingMiddleware>();

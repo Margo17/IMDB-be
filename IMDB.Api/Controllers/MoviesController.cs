@@ -2,10 +2,12 @@ using IMDB.Api.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
 using IMDB.Contracts.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IMDB.Api.Controllers;
 
+[Authorize]
 [ApiController]
 public class MoviesController(IMovieService _movieService) : ControllerBase
 {
@@ -19,6 +21,7 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         return CreatedAtAction(nameof(Get), new { idOrSlug = movie.Id }, movie.MapToResponse());
     }
 
+    [AllowAnonymous]
     [HttpGet(ApiEndpoints.Movies.Get)]
     public async Task<IActionResult> Get([FromRoute] string idOrSlug, CancellationToken token)
     {
@@ -31,6 +34,7 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         return Ok(movie.MapToResponse());
     }
 
+    [AllowAnonymous]
     [HttpGet(ApiEndpoints.Movies.GetAll)]
     public async Task<IActionResult> GetAll(CancellationToken token)
     {
