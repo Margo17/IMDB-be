@@ -1,4 +1,5 @@
 using System.Text;
+using IMDB.Api;
 using IMDB.Api.Mapping;
 using IMDB.Application;
 using IMDB.Application.Database;
@@ -27,7 +28,11 @@ builder.Services.AddAuthentication(ao =>
         ValidateAudience = true
     };
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(ao =>
+{
+    ao.AddPolicy(AuthConstants.AdminUserPolicyName,
+        p => p.RequireClaim(AuthConstants.AdminUserClaimName, "true"));
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
