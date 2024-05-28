@@ -32,6 +32,12 @@ builder.Services.AddAuthorization(ao =>
 {
     ao.AddPolicy(AuthConstants.AdminUserPolicyName,
         p => p.RequireClaim(AuthConstants.AdminUserClaimName, "true"));
+
+    ao.AddPolicy(AuthConstants.TrustedMemberPolicyName,
+        p => p.RequireAssertion(ctx =>
+            ctx.User.HasClaim(c => c is { Type: AuthConstants.AdminUserClaimName, Value: "true" }) ||
+            ctx.User.HasClaim(c => c is { Type: AuthConstants.TrustedMemberClaimName, Value: "true" }))
+        );
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
