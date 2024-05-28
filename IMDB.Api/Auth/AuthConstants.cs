@@ -1,4 +1,4 @@
-namespace IMDB.Api;
+namespace IMDB.Api.Auth;
 
 public static class AuthConstants
 {

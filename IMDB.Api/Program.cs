@@ -1,5 +1,5 @@
 using System.Text;
-using IMDB.Api;
+using IMDB.Api.Auth;
 using IMDB.Api.Mapping;
 using IMDB.Application;
 using IMDB.Application.Database;
