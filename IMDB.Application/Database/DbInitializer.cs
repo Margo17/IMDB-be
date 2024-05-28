@@ -14,7 +14,7 @@ public class DbInitializer(IDbConnectionFactory _dbConnectionFactory)
                                           id UUID primary key,
                                           slug TEXT not null,
                                           title TEXT not null,
-                                          yearofrelease integer not null);
+                                          yearofrelease INTEGER not null);
                                       """);
 
         await connection.ExecuteAsync("""
@@ -25,8 +25,16 @@ public class DbInitializer(IDbConnectionFactory _dbConnectionFactory)
 
         await connection.ExecuteAsync("""
                                       create table if not exists genres (
-                                          movieId UUID references movies (Id),
+                                          movieid UUID references movies (id),
                                           name TEXT not null);
+                                      """);
+        
+        await connection.ExecuteAsync("""
+                                      create table if not exists ratings (
+                                          userid UUID,
+                                          movieid UUID references movies (id),
+                                          rating INTEGER not null,
+                                          primary key (userid, movieid));
                                       """);
     }
 }
