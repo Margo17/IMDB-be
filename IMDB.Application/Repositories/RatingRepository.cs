@@ -15,7 +15,7 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
             values (@userId, @movieId, @rating)
             on conflict (userid, movieid) do update
             set rating = @rating
-            """, new { userId, movieId, rating }));
+            """, new { userId, movieId, rating }, cancellationToken: token));
 
         return result > 0;
     }
@@ -35,13 +35,13 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
 
         return await connection.QuerySingleOrDefaultAsync<(float?, int?)>(new CommandDefinition("""
-            select round(avg(r.rating), 1),
+            select round(avg(rating), 1),
                 (select rating
                  from ratings
                  where movieid = @movieId
                     and userid = @userId
                  limit 1)
-            from ratings r
+            from ratings
             where movieid = @movieId
             """, new { movieId, userId }, cancellationToken: token));
     }
