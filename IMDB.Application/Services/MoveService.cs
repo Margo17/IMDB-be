@@ -4,7 +4,10 @@ using IMDB.Application.Repositories;
 
 namespace IMDB.Application.Services;
 
-public class MoveService(IMovieRepository _movieRepository, IValidator<Movie> _movieValidator) : IMovieService
+public class MoveService(
+    IMovieRepository _movieRepository,
+    IRatingRepository _ratingRepository,
+    IValidator<Movie> _movieValidator) : IMovieService
 {
     public async Task<bool> CreateAsync(Movie movie, CancellationToken token = default)
     {
@@ -35,8 +38,20 @@ public class MoveService(IMovieRepository _movieRepository, IValidator<Movie> _m
         bool movieExists = await _movieRepository.ExistsByIdAsync(movie.Id, token);
         if (!movieExists) return null;
 
-        await _movieRepository.UpdateAsync(movie, userId, token);
+        await _movieRepository.UpdateAsync(movie, token);
 
+        if (!userId.HasValue)
+        {
+            float? rating = await _ratingRepository.GetRatingAsync(movie.Id, token);
+            movie.Rating = rating;
+            
+            return movie;
+        }
+
+        (float? Rating, int? UserRating) ratings = await _ratingRepository.GetRatingAsync(movie.Id, userId.Value, token);
+        movie.Rating = ratings.Rating;
+        movie.UserRating = ratings.UserRating;
+        
         return movie;
     }
 
