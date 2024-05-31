@@ -48,9 +48,9 @@ public class MoveService(
             return movie;
         }
 
-        (float? Rating, int? UserRating) ratings = await _ratingRepository.GetRatingAsync(movie.Id, userId.Value, token);
-        movie.Rating = ratings.Rating;
-        movie.UserRating = ratings.UserRating;
+        (float? movieRating, int? userRating) = await _ratingRepository.GetRatingAsync(movie.Id, userId.Value, token);
+        movie.Rating = movieRating;
+        movie.UserRating = userRating;
         
         return movie;
     }
