@@ -28,4 +28,9 @@ public class RatingService(IRatingRepository _ratingRepository, IMovieRepository
 
         return await _ratingRepository.RateMovieAsync(movieId, rating, userId, token);
     }
+
+    public Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
+    {
+        return _ratingRepository.DeleteRatingAsync(movieId, userId, token);
+    }
 }

@@ -45,4 +45,17 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
             where movieid = @movieId
             """, new { movieId, userId }, cancellationToken: token));
     }
+    
+    public async Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
+    {
+        using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+
+        int result = await connection.ExecuteAsync(new CommandDefinition("""
+            delete from ratings
+            where movieid = @movieId
+            and userid = @userId
+            """, new { movieId, userId }, cancellationToken: token));
+
+        return result > 0;
+    }
 }
