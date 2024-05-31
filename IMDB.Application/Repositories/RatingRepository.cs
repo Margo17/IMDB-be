@@ -1,6 +1,7 @@
 using System.Data;
 using Dapper;
 using IMDB.Application.Database;
+using IMDB.Application.Models;
 
 namespace IMDB.Application.Repositories;
 
@@ -45,7 +46,19 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
             where movieid = @movieId
             """, new { movieId, userId }, cancellationToken: token));
     }
-    
+
+    public async Task<IEnumerable<MovieRating>> GetRatingsForUserAsync(Guid userId, CancellationToken token = default)
+    {
+        using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+        
+        return await connection.QueryAsync<MovieRating>(new CommandDefinition("""
+            select r.movieid, r.userid, r.rating
+            from ratings r
+            inner join movies m on r.movieid = m.id
+            where userid = @userId
+            """, new { userId }, cancellationToken: token));
+    }
+
     public async Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
     {
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);

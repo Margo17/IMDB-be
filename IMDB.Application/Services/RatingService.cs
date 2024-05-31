@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.Results;
+using IMDB.Application.Models;
 using IMDB.Application.Repositories;
 
 namespace IMDB.Application.Services;
@@ -32,5 +33,10 @@ public class RatingService(IRatingRepository _ratingRepository, IMovieRepository
     public Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
     {
         return _ratingRepository.DeleteRatingAsync(movieId, userId, token);
+    }
+
+    public async Task<IEnumerable<MovieRating>> GetRatingsForUserAsync(Guid userId, CancellationToken token = default)
+    {
+        return await _ratingRepository.GetRatingsForUserAsync(userId, token);
     }
 }

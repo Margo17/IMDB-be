@@ -1,4 +1,6 @@
 using IMDB.Api.Auth;
+using IMDB.Api.Mapping;
+using IMDB.Application.Models;
 using IMDB.Application.Services;
 using IMDB.Contracts.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -29,5 +31,16 @@ public class RatingController(IRatingService _ratingService) : ControllerBase
         bool result = await _ratingService.DeleteRatingAsync(id, userId!.Value, token);
 
         return result ? Ok() : NotFound();
+    }
+    
+    [Authorize]
+    [HttpGet(ApiEndpoints.Ratings.GetUserRatings)]
+    public async Task<IActionResult> GetUserRatings(CancellationToken token)
+    {
+        Guid? userId = HttpContext.GetUserId();
+
+        IEnumerable<MovieRating> result = await _ratingService.GetRatingsForUserAsync(userId!.Value, token);
+
+        return Ok(result.MapToResponse());
     }
 }
