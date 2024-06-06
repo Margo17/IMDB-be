@@ -1,14 +1,26 @@
 using FluentValidation;
+using FluentValidation.Results;
 using IMDB.Application.Models;
 using IMDB.Application.Repositories;
 
 namespace IMDB.Application.Services;
 
-public class MoveService(
-    IMovieRepository _movieRepository,
-    IRatingRepository _ratingRepository,
-    IValidator<Movie> _movieValidator) : IMovieService
+public class MoveService : IMovieService
 {
+    private readonly IMovieRepository _movieRepository;
+    private readonly IRatingRepository _ratingRepository;
+    private readonly IValidator<Movie> _movieValidator;
+    private readonly IValidator<GetAllMoviesOptions> _optionsValidator;
+
+    public MoveService(IMovieRepository movieRepository, IRatingRepository ratingRepository,
+        IValidator<Movie> movieValidator, IValidator<GetAllMoviesOptions> optionsValidator)
+    {
+        _movieRepository = movieRepository;
+        _ratingRepository = ratingRepository;
+        _movieValidator = movieValidator;
+        _optionsValidator = optionsValidator;
+    }
+    
     public async Task<bool> CreateAsync(Movie movie, CancellationToken token = default)
     {
         await _movieValidator.ValidateAndThrowAsync(movie, cancellationToken: token);
@@ -26,9 +38,11 @@ public class MoveService(
         return _movieRepository.GetBySlugAsync(slug, userId, token);
     }
 
-    public Task<IEnumerable<Movie>> GetAllAsync(Guid? userId = default, CancellationToken token = default)
+    public async Task<IEnumerable<Movie>> GetAllAsync(GetAllMoviesOptions options, CancellationToken token = default)
     {
-        return _movieRepository.GetAllAsync(userId, token);
+        await _optionsValidator.ValidateAndThrowAsync(options, token);
+        
+        return await _movieRepository.GetAllAsync(options, token);
     }
 
     public async Task<Movie?> UpdateAsync(Movie movie, Guid? userId = default, CancellationToken token = default)

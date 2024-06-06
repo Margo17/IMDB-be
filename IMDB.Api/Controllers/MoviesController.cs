@@ -30,17 +30,18 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         Movie? movie = Guid.TryParse(idOrSlug, out Guid id)
             ? await _movieService.GetByIdAsync(id, userId, token)
             : await _movieService.GetBySlugAsync(idOrSlug, userId, token);
-
         if (movie is null) return NotFound();
 
         return Ok(movie.MapToResponse());
     }
 
     [HttpGet(ApiEndpoints.Movies.GetAll)]
-    public async Task<IActionResult> GetAll(CancellationToken token)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllMoviesRequest request, CancellationToken token)
     {
         Guid? userId = HttpContext.GetUserId();
-        IEnumerable<Movie> movies = await _movieService.GetAllAsync(userId, token);
+        GetAllMoviesOptions options = request.MapToOptions()
+            .WithUser(userId);
+        IEnumerable<Movie> movies = await _movieService.GetAllAsync(options, token);
 
         return Ok(movies.MapToResponse());
     }
@@ -54,7 +55,6 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         Guid? userId = HttpContext.GetUserId();
 
         Movie? updatedMovie = await _movieService.UpdateAsync(movie, userId, token);
-
         if (updatedMovie is null) return NotFound();
 
         return Ok(movie.MapToResponse());
@@ -65,7 +65,6 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken token)
     {
         bool deleted = await _movieService.DeleteByIdAsync(id, token);
-
         if (!deleted) return NotFound();
 
         return Ok();
