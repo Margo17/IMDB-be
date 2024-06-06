@@ -21,7 +21,7 @@ public class MovieValidator : AbstractValidator<Movie>
         RuleFor(m => m.Title)
             .NotEmpty();
 
-        RuleFor(m => m.YearOfRelease)
+        RuleFor(m => m.Year)
             .LessThanOrEqualTo(DateTime.UtcNow.Year);
         
         RuleFor(m => m.Slug)

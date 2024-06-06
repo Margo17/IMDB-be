@@ -13,7 +13,7 @@ public class ValidationMappingMiddleware(RequestDelegate _next)
         }
         catch (ValidationException ex)
         {
-            ValidationFailureResponse validationFailureResponse = new ValidationFailureResponse()
+            ValidationFailureResponse validationFailureResponse = new()
             {
                 Errors = ex.Errors.Select(e => new ValidationResponse()
                 {

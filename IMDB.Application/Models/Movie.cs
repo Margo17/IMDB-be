@@ -14,7 +14,7 @@ public partial class Movie
     
     public int? UserRating { get; set; }
 
-    public required int YearOfRelease { get; set; }
+    public required int Year { get; set; }
 
     public required List<string> Genres { get; init; } = [];
 
@@ -24,7 +24,7 @@ public partial class Movie
             .ToLower()
             .Replace(' ', '-');
 
-        return $"{sluggedTitle}-{YearOfRelease}";
+        return $"{sluggedTitle}-{Year}";
     }
 
     [GeneratedRegex("[^0-9 A-Z a-z _-]", RegexOptions.NonBacktracking, 5)]

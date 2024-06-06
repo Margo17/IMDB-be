@@ -12,7 +12,7 @@ public class MovieResponse
     
     public int? UserRating { get; init; }
 
-    public required int YearOfRelease { get; init; }
+    public required int Year { get; init; }
 
     public required IEnumerable<string> Genres { get; init; } = Enumerable.Empty<string>();
 }

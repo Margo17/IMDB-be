@@ -14,7 +14,7 @@ public class DbInitializer(IDbConnectionFactory _dbConnectionFactory)
                                           id UUID primary key,
                                           slug TEXT not null,
                                           title TEXT not null,
-                                          yearofrelease INTEGER not null);
+                                          year INTEGER not null);
                                       """);
 
         await connection.ExecuteAsync("""

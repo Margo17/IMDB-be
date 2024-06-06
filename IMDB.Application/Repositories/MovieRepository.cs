@@ -13,8 +13,8 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
         using IDbTransaction transaction = connection.BeginTransaction();
 
         int result = await connection.ExecuteAsync(new CommandDefinition("""
-            insert into movies (id, slug, title, yearofrelease)
-            values (@Id, @Slug, @Title, @YearOfRelease)
+            insert into movies (id, slug, title, year)
+            values (@Id, @Slug, @Title, @Year)
             """, movie, cancellationToken: token));
 
         if (result is 0) return false;
@@ -97,13 +97,13 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
                 left join ratings myr on m.id = myr.movieid
                     and myr.userid = @userid
                 where (@title is null or m.title like ('%' || @title || '%'))
-                and (@yearofrealease is null or m.yearofrelease = @yearofrelease)
-                group by id, userrating 
+                and (@yearofrealease is null or m.year = @year)
+                group by id, userrating {orderClause}
                 """, new
             {
                 userId = options.UserId,
                 title = options.Title,
-                yearofrelease = options.YearOfRelease
+                year = options.Year
             },
             cancellationToken: token));
 
@@ -111,7 +111,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
         {
             Id = m.id,
             Title = m.title,
-            YearOfRelease = m.yearofrelease,
+            Year = m.Year,
             Rating = (float?)m.rating,
             UserRating = (int?)m.userrating,
             Genres = Enumerable.ToList(m.genres.Split(','))
@@ -136,7 +136,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
         }
         
         int result = await connection.ExecuteAsync(new CommandDefinition("""
-            update movies set slug = @Slug, title = @Title, yearofrelease = @YearOfRelease 
+            update movies set slug = @Slug, title = @Title, year = @Year 
             where id = @Id
             """, movie, cancellationToken: token));
         

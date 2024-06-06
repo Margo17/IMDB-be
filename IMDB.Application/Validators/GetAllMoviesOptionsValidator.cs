@@ -7,7 +7,7 @@ public class GetAllMoviesOptionsValidator : AbstractValidator<GetAllMoviesOption
 {
     public GetAllMoviesOptionsValidator()
     {
-        RuleFor(o => o.YearOfRelease)
+        RuleFor(o => o.Year)
             .LessThanOrEqualTo(DateTime.UtcNow.Year);
     }
 }
