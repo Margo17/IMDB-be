@@ -84,7 +84,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
 
     public async Task<IEnumerable<Movie>> GetAllAsync(GetAllMoviesOptions options, CancellationToken token = default)
     {
-        using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync();
+        using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
 
         string orderClause = string.Empty;
         if (options.SortField is not null)
@@ -106,7 +106,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
                 left join ratings myr on m.id = myr.movieid
                     and myr.userid = @userid
                 where (@title is null or m.title like ('%' || @title || '%'))
-                and (@yearofrealease is null or m.year = @year)
+                and (@year is null or m.year = @year)
                 group by id, userrating {orderClause}
                 """, new
             {
@@ -120,7 +120,7 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
         {
             Id = m.id,
             Title = m.title,
-            Year = m.Year,
+            Year = m.year,
             Rating = (float?)m.rating,
             UserRating = (int?)m.userrating,
             Genres = Enumerable.ToList(m.genres.Split(','))
