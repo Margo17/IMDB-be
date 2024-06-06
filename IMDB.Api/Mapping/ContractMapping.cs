@@ -12,7 +12,7 @@ public static class ContractMapping
         {
             Id = Guid.NewGuid(),
             Title = request.Title,
-            YearOfRelease = request.YearOfRelease,
+            Year = request.Year,
             Genres = request.Genres.ToList()
         };
     }
@@ -23,7 +23,7 @@ public static class ContractMapping
         {
             Id = id,
             Title = request.Title,
-            YearOfRelease = request.YearOfRelease,
+            Year = request.Year,
             Genres = request.Genres.ToList()
         };
     }
@@ -37,7 +37,7 @@ public static class ContractMapping
             Slug = movie.Slug,
             Rating = movie.Rating,
             UserRating = movie.UserRating,
-            YearOfRelease = movie.YearOfRelease,
+            Year = movie.Year,
             Genres = movie.Genres
         };
     }
@@ -65,7 +65,10 @@ public static class ContractMapping
         return new GetAllMoviesOptions
         {
             Title = request.Title,
-            YearOfRelease = request.Year
+            Year = request.Year,
+            SortField = request.SortBy?.TrimStart('+', '-'),
+            SortOrder = request.SortBy is null ? SortOrder.Unsorted :
+                request.SortBy.StartsWith('-') ? SortOrder.Descending : SortOrder.Ascending
         };
     }
 

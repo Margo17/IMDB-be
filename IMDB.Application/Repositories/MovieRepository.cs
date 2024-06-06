@@ -86,7 +86,16 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
     {
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync();
 
-        IEnumerable<dynamic> result = await connection.QueryAsync(new CommandDefinition("""
+        string orderClause = string.Empty;
+        if (options.SortField is not null)
+        {
+            orderClause = $"""
+                , m.{options.SortField}
+                order by m.{options.SortField} {(options.SortOrder == SortOrder.Ascending ? "asc" : "desc")}
+                """;
+        }
+
+        IEnumerable<dynamic> result = await connection.QueryAsync(new CommandDefinition($"""
                 select m.*,
                        string_agg(distinct g.name, ',') as genres,
                        round(avg(r.rating), 1) as rating,
