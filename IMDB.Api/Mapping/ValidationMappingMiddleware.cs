@@ -22,7 +22,7 @@ public class ValidationMappingMiddleware(RequestDelegate _next)
                 })
             };
             
-            context.Response.StatusCode = 400;
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsJsonAsync(validationFailureResponse);
         }
     }
