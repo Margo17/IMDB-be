@@ -108,11 +108,15 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
                 where (@title is null or m.title like ('%' || @title || '%'))
                 and (@year is null or m.year = @year)
                 group by id, userrating {orderClause}
+                limit @pageSize
+                offset @pageOffset
                 """, new
             {
                 userId = options.UserId,
                 title = options.Title,
-                year = options.Year
+                year = options.Year,
+                pageSize = options.PageSize,
+                pageOffset = (options.Page - 1) * options.PageSize
             },
             cancellationToken: token));
 
@@ -179,5 +183,17 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
         return await connection.ExecuteScalarAsync<bool>(new CommandDefinition("""
             select count(1) from movies where id = @id
             """, new { id }, cancellationToken: token));
+    }
+
+    public async Task<int> GetCountAsync(string? title, int? year, CancellationToken token = default)
+    {
+        using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+
+        return await connection.QuerySingleAsync(new CommandDefinition("""
+            select count(*)
+            from movies
+            where (@title is null or title like ('%' || @title || '%'))
+            and (@year is null or @year = year) 
+            """, new { title, year }, cancellationToken: token));
     }
 }

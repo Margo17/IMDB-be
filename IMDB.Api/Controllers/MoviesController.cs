@@ -3,6 +3,7 @@ using IMDB.Api.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
 using IMDB.Contracts.Requests;
+using IMDB.Contracts.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,9 +42,12 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         Guid? userId = HttpContext.GetUserId();
         GetAllMoviesOptions options = request.MapToOptions()
             .WithUser(userId);
+        
         IEnumerable<Movie> movies = await _movieService.GetAllAsync(options, token);
-
-        return Ok(movies.MapToResponse());
+        int movieCount = await _movieService.GetCountAsync(options.Title, options.Year, token);
+        MoviesResponse moviesResponse = movies.MapToResponse(options.Page, options.PageSize, movieCount);
+        
+        return Ok(moviesResponse);
     }
 
     [Authorize(AuthConstants.TrustedMemberPolicyName)]
