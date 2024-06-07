@@ -1,10 +1,13 @@
 using System.Text;
 using IMDB.Api.Auth;
 using IMDB.Api.Mapping;
+using IMDB.Api.Swagger;
 using IMDB.Application;
 using IMDB.Application.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -41,6 +44,7 @@ builder.Services.AddAuthorization(ao =>
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddDatabase(configuration["Database:ConnectionString"]!);
