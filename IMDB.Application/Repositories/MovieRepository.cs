@@ -189,8 +189,8 @@ public class MovieRepository(IDbConnectionFactory _dbConnectionFactory) : IMovie
     {
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
 
-        return await connection.QuerySingleAsync(new CommandDefinition("""
-            select count(*)
+        return await connection.QuerySingleAsync<int>(new CommandDefinition("""
+            select count(id)
             from movies
             where (@title is null or title like ('%' || @title || '%'))
             and (@year is null or @year = year) 
