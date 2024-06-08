@@ -1,5 +1,6 @@
 using System.Text;
 using IMDB.Api.Auth;
+using IMDB.Api.Health;
 using IMDB.Api.Mapping;
 using IMDB.Api.Swagger;
 using IMDB.Application;
@@ -43,6 +44,8 @@ builder.Services.AddAuthorization(ao =>
         );
 });
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 builder.Services.AddSwaggerGen();
@@ -57,6 +60,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapHealthChecks("_health");
 
 app.UseHttpsRedirection();
 
