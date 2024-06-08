@@ -43,6 +43,7 @@ builder.Services.AddAuthorization(ao =>
             ctx.User.HasClaim(c => c is { Type: AuthConstants.TrustedMemberClaimName, Value: "true" }))
         );
 });
+builder.Services.AddScoped<ApiKeyAuthFilter>();
 builder.Services.AddResponseCaching();
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
