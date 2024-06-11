@@ -1,15 +1,23 @@
 ﻿using System.Text.Json;
 using IMDB.Api.Sdk;
+using IMDB.Api.Sdk.Consumer;
 using IMDB.Contracts.Requests;
 using IMDB.Contracts.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 
+// This allows for a simple refit implementation without HttpClientFactory and DI
 // IMoviesApi moviesApi = RestService.For<IMoviesApi>("https://localhost:5001");
 
 ServiceCollection services = [];
-services.AddRefitClient<IMoviesApi>()
-    .ConfigureHttpClient(hc => hc.BaseAddress = new Uri("https://localhost:5001"));
+services
+    .AddHttpClient()
+    .AddSingleton<AuthTokenProvider>()
+    .AddRefitClient<IMoviesApi>(sa => new RefitSettings
+    {
+        AuthorizationHeaderValueGetter = async (_, _) => await sa.GetRequiredService<AuthTokenProvider>().GetTokenAsync()
+    })
+    .ConfigureHttpClient(cc => cc.BaseAddress = new Uri("https://localhost:5001"));
 
 ServiceProvider provider = services.BuildServiceProvider();
 IMoviesApi moviesApi = provider.GetRequiredService<IMoviesApi>();
