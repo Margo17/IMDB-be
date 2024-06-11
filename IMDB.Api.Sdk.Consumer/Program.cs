@@ -2,9 +2,17 @@
 using IMDB.Api.Sdk;
 using IMDB.Contracts.Requests;
 using IMDB.Contracts.Responses;
+using Microsoft.Extensions.DependencyInjection;
 using Refit;
 
-IMoviesApi moviesApi = RestService.For<IMoviesApi>("https://localhost:5001");
+// IMoviesApi moviesApi = RestService.For<IMoviesApi>("https://localhost:5001");
+
+ServiceCollection services = [];
+services.AddRefitClient<IMoviesApi>()
+    .ConfigureHttpClient(hc => hc.BaseAddress = new Uri("https://localhost:5001"));
+
+ServiceProvider provider = services.BuildServiceProvider();
+IMoviesApi moviesApi = provider.GetRequiredService<IMoviesApi>();
 
 MovieResponse movie = await moviesApi.GetMovieAsync("kazkoks-filmas-2000");
 
