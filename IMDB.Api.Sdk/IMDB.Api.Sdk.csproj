@@ -10,4 +10,8 @@
       <ProjectReference Include="..\IMDB.Contracts\IMDB.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Refit" Version="7.0.0" />
+    </ItemGroup>
+
 </Project>
