@@ -6,7 +6,7 @@ using IMDB.Contracts.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 
-// This allows for a simple refit implementation without HttpClientFactory and DI
+// This allows for a simple Refit implementation without HttpClientFactory and DI
 // IMoviesApi moviesApi = RestService.For<IMoviesApi>("https://localhost:5001");
 
 ServiceCollection services = [];
