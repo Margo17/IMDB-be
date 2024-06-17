@@ -52,7 +52,7 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
         
         IEnumerable<Movie> movies = await _movieService.GetAllAsync(options, token);
         int movieCount = await _movieService.GetCountAsync(options.Title, options.Year, token);
-        MoviesResponse moviesResponse = movies.MapToResponse(options.Page, options.PageSize, movieCount);
+        MoviesResponse moviesResponse = movies.MapToResponse(request.Page, request.PageSize, movieCount);
         
         return Ok(moviesResponse);
     }
