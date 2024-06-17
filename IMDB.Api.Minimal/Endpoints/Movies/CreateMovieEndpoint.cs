@@ -12,7 +12,7 @@ public static class CreateMovieEndpoint
     public static IEndpointRouteBuilder MapCreateMovie(this IEndpointRouteBuilder app)
     {
         app.MapPost(ApiEndpoints.Movies.Create,
-            async (IMovieService movieService, CreateMovieRequest request, CancellationToken token) =>
+            async (CreateMovieRequest request, IMovieService movieService, CancellationToken token) =>
             {
                 Movie movie = request.MapToMovie();
 
