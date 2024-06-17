@@ -14,7 +14,7 @@ public static class DeleteMovieEndpoint
                     bool deleted = await movieService.DeleteByIdAsync(id, token);
                     if (!deleted) return Results.NotFound();
 
-                    return TypedResults.Ok();
+                    return Results.Ok();
                 })
             .WithName(Name);
 
