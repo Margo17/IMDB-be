@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Primitives;
 
-namespace IMDB.Api.Auth;
+namespace IMDB.Api.Minimal.Auth;
 
 public class AdminAuthRequirement(string _apiKey) : IAuthorizationHandler, IAuthorizationRequirement
 {

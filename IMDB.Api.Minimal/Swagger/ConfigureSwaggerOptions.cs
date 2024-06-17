@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace IMDB.Api.Swagger;
+namespace IMDB.Api.Minimal.Swagger;
 
 public class ConfigureSwaggerOptions(IHostEnvironment _environment) : IConfigureOptions<SwaggerGenOptions>
 {

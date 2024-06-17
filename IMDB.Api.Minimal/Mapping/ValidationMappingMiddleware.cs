@@ -1,7 +1,7 @@
 using FluentValidation;
 using IMDB.Contracts.Responses;
 
-namespace IMDB.Api.Mapping;
+namespace IMDB.Api.Minimal.Mapping;
 
 public class ValidationMappingMiddleware(RequestDelegate _next)
 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 
-namespace IMDB.Api.Auth;
+namespace IMDB.Api.Minimal.Auth;
 
 public class ApiKeyAuthFilter(IConfiguration _configuration) : IAuthorizationFilter
 {

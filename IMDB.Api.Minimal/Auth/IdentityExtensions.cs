@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace IMDB.Api.Auth;
+namespace IMDB.Api.Minimal.Auth;
 
 public static class IdentityExtensions
 {

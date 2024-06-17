@@ -1,9 +1,9 @@
 using System.Text;
-using IMDB.Api.Auth;
-using IMDB.Api.Health;
-using IMDB.Api.Mapping;
+using IMDB.Api.Minimal.Auth;
+using IMDB.Api.Minimal.Health;
+using IMDB.Api.Minimal.Mapping;
 using IMDB.Api.Minimal.Endpoints;
-using IMDB.Api.Swagger;
+using IMDB.Api.Minimal.Swagger;
 using IMDB.Application;
 using IMDB.Application.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

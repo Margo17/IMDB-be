@@ -1,7 +1,7 @@
 using IMDB.Application.Database;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace IMDB.Api.Health;
+namespace IMDB.Api.Minimal.Health;
 
 public class DatabaseHealthCheck(IDbConnectionFactory _connectionFactory, ILogger<DatabaseHealthCheck> _logger)
     : IHealthCheck

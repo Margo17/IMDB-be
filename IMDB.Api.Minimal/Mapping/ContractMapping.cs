@@ -2,7 +2,7 @@ using IMDB.Application.Models;
 using IMDB.Contracts.Requests;
 using IMDB.Contracts.Responses;
 
-namespace IMDB.Api.Mapping;
+namespace IMDB.Api.Minimal.Mapping;
 
 public static class ContractMapping
 {
