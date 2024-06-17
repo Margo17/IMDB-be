@@ -1,3 +1,4 @@
+using IMDB.Api.Minimal.Auth;
 using IMDB.Application.Services;
 
 namespace IMDB.Api.Minimal.Endpoints.Movies;
@@ -16,7 +17,8 @@ public static class DeleteMovieEndpoint
 
                     return Results.Ok();
                 })
-            .WithName(Name);
+            .WithName(Name)
+            .RequireAuthorization(AuthConstants.AdminUserPolicyName);
 
         return app;
     }

@@ -1,3 +1,4 @@
+using IMDB.Api.Minimal.Auth;
 using IMDB.Api.Minimal.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
@@ -21,7 +22,8 @@ public static class CreateMovieEndpoint
                 return TypedResults.CreatedAtRoute(movie.MapToResponse(), GetMovieEndpoint.Name,
                     new { idOrSlug = movie.Id });
             })
-            .WithName(Name);
+            .WithName(Name)
+            .RequireAuthorization(AuthConstants.TrustedMemberPolicyName);
 
         return app;
     }
