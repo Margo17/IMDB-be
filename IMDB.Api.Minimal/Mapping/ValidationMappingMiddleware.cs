@@ -1,5 +1,5 @@
 using FluentValidation;
-using IMDB.Contracts.Responses;
+using IMDB.Contracts.Minimal.Responses;
 
 namespace IMDB.Api.Minimal.Mapping;
 

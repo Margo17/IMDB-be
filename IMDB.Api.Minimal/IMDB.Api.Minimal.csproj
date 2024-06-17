@@ -14,7 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\IMDB.Application\IMDB.Application.csproj" />
-      <ProjectReference Include="..\IMDB.Contracts\IMDB.Contracts.csproj" />
+      <ProjectReference Include="..\IMDB.Contracts.Minimal\IMDB.Contracts.Minimal.csproj" />
     </ItemGroup>
 
 </Project>

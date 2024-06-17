@@ -1,7 +1,7 @@
 using IMDB.Api.Minimal.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
-using IMDB.Contracts.Requests;
+using IMDB.Contracts.Minimal.Requests;
 
 namespace IMDB.Api.Minimal.Endpoints.Movies;
 

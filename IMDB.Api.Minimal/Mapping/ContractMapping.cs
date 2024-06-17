@@ -1,6 +1,6 @@
 using IMDB.Application.Models;
-using IMDB.Contracts.Requests;
-using IMDB.Contracts.Responses;
+using IMDB.Contracts.Minimal.Requests;
+using IMDB.Contracts.Minimal.Responses;
 
 namespace IMDB.Api.Minimal.Mapping;
 
