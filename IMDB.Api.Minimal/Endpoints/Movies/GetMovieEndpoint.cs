@@ -12,16 +12,17 @@ public static class GetMovieEndpoint
     public static IEndpointRouteBuilder MapGetMovie(this IEndpointRouteBuilder app)
     {
         app.MapGet(ApiEndpoints.Movies.Get,
-            async (string idOrSlug, IMovieService movieService, HttpContext context, CancellationToken token) =>
-            {
-                Guid? userId = context.GetUserId();
+                async (string idOrSlug, IMovieService movieService, HttpContext context, CancellationToken token) =>
+                {
+                    Guid? userId = context.GetUserId();
 
-                Movie? movie = Guid.TryParse(idOrSlug, out Guid id)
-                    ? await movieService.GetByIdAsync(id, userId, token)
-                    : await movieService.GetBySlugAsync(idOrSlug, userId, token);
+                    Movie? movie = Guid.TryParse(idOrSlug, out Guid id)
+                        ? await movieService.GetByIdAsync(id, userId, token)
+                        : await movieService.GetBySlugAsync(idOrSlug, userId, token);
 
-                return movie is null ? Results.NotFound() : TypedResults.Ok(movie.MapToResponse());
-            });
+                    return movie is null ? Results.NotFound() : TypedResults.Ok(movie.MapToResponse());
+                })
+            .WithName(Name);
 
         return app;
     }
