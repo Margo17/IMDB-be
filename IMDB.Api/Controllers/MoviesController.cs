@@ -42,18 +42,19 @@ public class MoviesController(IMovieService _movieService) : ControllerBase
     }
 
     [HttpGet(ApiEndpoints.Movies.GetAll)]
-    [ResponseCache(Duration = 30, VaryByQueryKeys = [ "title", "year", "sortBy", "page", "pageSize" ], VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
+    [ResponseCache(Duration = 30, VaryByQueryKeys = ["title", "year", "sortBy", "page", "pageSize"],
+        VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
     [ProducesResponseType(typeof(MoviesResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll([FromQuery] GetAllMoviesRequest request, CancellationToken token)
     {
         Guid? userId = HttpContext.GetUserId();
         GetAllMoviesOptions options = request.MapToOptions()
             .WithUser(userId);
-        
+
         IEnumerable<Movie> movies = await _movieService.GetAllAsync(options, token);
         int movieCount = await _movieService.GetCountAsync(options.Title, options.Year, token);
         MoviesResponse moviesResponse = movies.MapToResponse(request.Page, request.PageSize, movieCount);
-        
+
         return Ok(moviesResponse);
     }
 
