@@ -52,7 +52,7 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
         
         return await connection.QueryAsync<MovieRating>(new CommandDefinition("""
-            select r.movieid, r.userid, r.rating
+            select r.movieid, r.rating, m.slug
             from ratings r
             inner join movies m on r.movieid = m.id
             where userid = @userId
