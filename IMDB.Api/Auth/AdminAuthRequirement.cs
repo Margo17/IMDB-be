@@ -25,7 +25,7 @@ public class AdminAuthRequirement(string _apiKey) : IAuthorizationHandler, IAuth
             context.Fail();
             return Task.CompletedTask;
         }
-        
+
         if (_apiKey != extractedApiKey)
         {
             context.Fail();

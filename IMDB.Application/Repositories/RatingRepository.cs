@@ -31,7 +31,8 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
             """, new { movieId }, cancellationToken: token));
     }
 
-    public async Task<(float? Rating, int? UserRating)> GetRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
+    public async Task<(float? Rating, int? UserRating)> GetRatingAsync(Guid movieId, Guid userId,
+        CancellationToken token = default)
     {
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
 
@@ -50,7 +51,7 @@ public class RatingRepository(IDbConnectionFactory _dbConnectionFactory) : IRati
     public async Task<IEnumerable<MovieRating>> GetRatingsForUserAsync(Guid userId, CancellationToken token = default)
     {
         using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(token);
-        
+
         return await connection.QueryAsync<MovieRating>(new CommandDefinition("""
             select r.movieid, r.rating, m.slug
             from ratings r

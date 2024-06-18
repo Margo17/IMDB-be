@@ -16,10 +16,11 @@ public class RatingController(IRatingService _ratingService) : ControllerBase
     [HttpPut(ApiEndpoints.Movies.Rate)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RateMovie([FromRoute] Guid id, [FromBody] RateMovieRequest request, CancellationToken token)
+    public async Task<IActionResult> RateMovie([FromRoute] Guid id, [FromBody] RateMovieRequest request,
+        CancellationToken token)
     {
         Guid? userId = HttpContext.GetUserId();
-        
+
         bool result = await _ratingService.RateMovieAsync(id, request.Rating, userId!.Value, token);
 
         return result ? Ok() : NotFound();
@@ -37,7 +38,7 @@ public class RatingController(IRatingService _ratingService) : ControllerBase
 
         return result ? Ok() : NotFound();
     }
-    
+
     [Authorize]
     [HttpGet(ApiEndpoints.Ratings.GetUserRatings)]
     [ProducesResponseType(typeof(IEnumerable<MovieRatingResponse>), StatusCodes.Status200OK)]

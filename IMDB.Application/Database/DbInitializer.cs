@@ -28,7 +28,7 @@ public class DbInitializer(IDbConnectionFactory _dbConnectionFactory)
                                           movieid UUID references movies (id),
                                           name TEXT not null);
                                       """);
-        
+
         await connection.ExecuteAsync("""
                                       create table if not exists ratings (
                                           userid UUID,

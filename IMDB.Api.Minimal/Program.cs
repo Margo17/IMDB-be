@@ -1,8 +1,8 @@
 using System.Text;
 using IMDB.Api.Minimal.Auth;
+using IMDB.Api.Minimal.Endpoints;
 using IMDB.Api.Minimal.Health;
 using IMDB.Api.Minimal.Mapping;
-using IMDB.Api.Minimal.Endpoints;
 using IMDB.Api.Minimal.Swagger;
 using IMDB.Application;
 using IMDB.Application.Database;
@@ -42,7 +42,7 @@ builder.Services.AddAuthorization(ao =>
         p => p.RequireAssertion(ctx =>
             ctx.User.HasClaim(c => c is { Type: AuthConstants.AdminUserClaimName, Value: "true" }) ||
             ctx.User.HasClaim(c => c is { Type: AuthConstants.TrustedMemberClaimName, Value: "true" }))
-        );
+    );
 });
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 builder.Services.AddResponseCaching();

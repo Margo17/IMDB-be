@@ -41,7 +41,7 @@ builder.Services.AddAuthorization(ao =>
         p => p.RequireAssertion(ctx =>
             ctx.User.HasClaim(c => c is { Type: AuthConstants.AdminUserClaimName, Value: "true" }) ||
             ctx.User.HasClaim(c => c is { Type: AuthConstants.TrustedMemberClaimName, Value: "true" }))
-        );
+    );
 });
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 builder.Services.AddResponseCaching();

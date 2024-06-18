@@ -14,15 +14,15 @@ public static class CreateMovieEndpoint
     public static IEndpointRouteBuilder MapCreateMovie(this IEndpointRouteBuilder app)
     {
         app.MapPost(ApiEndpoints.Movies.Create,
-            async (CreateMovieRequest request, IMovieService movieService, CancellationToken token) =>
-            {
-                Movie movie = request.MapToMovie();
+                async (CreateMovieRequest request, IMovieService movieService, CancellationToken token) =>
+                {
+                    Movie movie = request.MapToMovie();
 
-                await movieService.CreateAsync(movie, token);
+                    await movieService.CreateAsync(movie, token);
 
-                return TypedResults.CreatedAtRoute(movie.MapToResponse(), GetMovieEndpoint.Name,
-                    new { idOrSlug = movie.Id });
-            })
+                    return TypedResults.CreatedAtRoute(movie.MapToResponse(), GetMovieEndpoint.Name,
+                        new { idOrSlug = movie.Id });
+                })
             .WithName(Name)
             .Produces<MovieResponse>(StatusCodes.Status201Created)
             .Produces<ValidationFailureResponse>(StatusCodes.Status400BadRequest)

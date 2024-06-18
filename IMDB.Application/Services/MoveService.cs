@@ -1,5 +1,4 @@
 using FluentValidation;
-using FluentValidation.Results;
 using IMDB.Application.Models;
 using IMDB.Application.Repositories;
 
@@ -20,11 +19,11 @@ public class MoveService : IMovieService
         _movieValidator = movieValidator;
         _optionsValidator = optionsValidator;
     }
-    
+
     public async Task<bool> CreateAsync(Movie movie, CancellationToken token = default)
     {
-        await _movieValidator.ValidateAndThrowAsync(movie, cancellationToken: token);
-        
+        await _movieValidator.ValidateAndThrowAsync(movie, token);
+
         return await _movieRepository.CreateAsync(movie, token);
     }
 
@@ -41,14 +40,14 @@ public class MoveService : IMovieService
     public async Task<IEnumerable<Movie>> GetAllAsync(GetAllMoviesOptions options, CancellationToken token = default)
     {
         await _optionsValidator.ValidateAndThrowAsync(options, token);
-        
+
         return await _movieRepository.GetAllAsync(options, token);
     }
 
     public async Task<Movie?> UpdateAsync(Movie movie, Guid? userId = default, CancellationToken token = default)
     {
-        await _movieValidator.ValidateAndThrowAsync(movie, cancellationToken: token);
-        
+        await _movieValidator.ValidateAndThrowAsync(movie, token);
+
         bool movieExists = await _movieRepository.ExistsByIdAsync(movie.Id, token);
         if (!movieExists) return null;
 
@@ -58,14 +57,14 @@ public class MoveService : IMovieService
         {
             float? rating = await _ratingRepository.GetRatingAsync(movie.Id, token);
             movie.Rating = rating;
-            
+
             return movie;
         }
 
         (float? movieRating, int? userRating) = await _ratingRepository.GetRatingAsync(movie.Id, userId.Value, token);
         movie.Rating = movieRating;
         movie.UserRating = userRating;
-        
+
         return movie;
     }
 

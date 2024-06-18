@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
+        <PackageReference Include="Asp.Versioning.Http" Version="8.1.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\IMDB.Application\IMDB.Application.csproj" />
-      <ProjectReference Include="..\IMDB.Contracts.Minimal\IMDB.Contracts.Minimal.csproj" />
+        <ProjectReference Include="..\IMDB.Application\IMDB.Application.csproj"/>
+        <ProjectReference Include="..\IMDB.Contracts.Minimal\IMDB.Contracts.Minimal.csproj"/>
     </ItemGroup>
 
 </Project>

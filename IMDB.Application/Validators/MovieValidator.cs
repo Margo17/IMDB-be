@@ -7,11 +7,11 @@ namespace IMDB.Application.Validators;
 public class MovieValidator : AbstractValidator<Movie>
 {
     private readonly IMovieRepository _movieRepository;
-    
+
     public MovieValidator(IMovieRepository movieRepository)
     {
         _movieRepository = movieRepository;
-        
+
         RuleFor(m => m.Id)
             .NotEmpty();
 
@@ -23,7 +23,7 @@ public class MovieValidator : AbstractValidator<Movie>
 
         RuleFor(m => m.Year)
             .LessThanOrEqualTo(DateTime.UtcNow.Year);
-        
+
         RuleFor(m => m.Slug)
             .MustAsync(ValidateSlug)
             .WithMessage("This movie already exists in the system");

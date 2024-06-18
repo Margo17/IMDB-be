@@ -15,13 +15,13 @@ public class ValidationMappingMiddleware(RequestDelegate _next)
         {
             ValidationFailureResponse validationFailureResponse = new()
             {
-                Errors = ex.Errors.Select(e => new ValidationResponse()
+                Errors = ex.Errors.Select(e => new ValidationResponse
                 {
                     PropertyName = e.PropertyName,
                     Message = e.ErrorMessage
                 })
             };
-            
+
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsJsonAsync(validationFailureResponse);
         }
