@@ -3,6 +3,7 @@ using IMDB.Api.Minimal.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
 using IMDB.Contracts.Minimal.Requests;
+using IMDB.Contracts.Minimal.Responses;
 
 namespace IMDB.Api.Minimal.Endpoints.Movies;
 
@@ -23,6 +24,8 @@ public static class CreateMovieEndpoint
                     new { idOrSlug = movie.Id });
             })
             .WithName(Name)
+            .Produces<MovieResponse>(StatusCodes.Status201Created)
+            .Produces<ValidationFailureResponse>(StatusCodes.Status400BadRequest)
             .RequireAuthorization(AuthConstants.TrustedMemberPolicyName);
 
         return app;

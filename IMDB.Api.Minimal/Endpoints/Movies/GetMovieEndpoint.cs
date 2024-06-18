@@ -2,6 +2,7 @@ using IMDB.Api.Minimal.Auth;
 using IMDB.Api.Minimal.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
+using IMDB.Contracts.Minimal.Responses;
 
 namespace IMDB.Api.Minimal.Endpoints.Movies;
 
@@ -22,7 +23,9 @@ public static class GetMovieEndpoint
 
                     return movie is null ? Results.NotFound() : TypedResults.Ok(movie.MapToResponse());
                 })
-            .WithName(Name);
+            .WithName(Name)
+            .Produces<MovieResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
 
         return app;
     }

@@ -2,6 +2,7 @@
 using IMDB.Api.Minimal.Mapping;
 using IMDB.Application.Models;
 using IMDB.Application.Services;
+using IMDB.Contracts.Minimal.Responses;
 
 namespace IMDB.Api.Minimal.Endpoints.Ratings;
 
@@ -22,6 +23,7 @@ public static class GetUserRatingsEndpoint
                     return TypedResults.Ok(result.MapToResponse());
                 })
             .WithName(Name)
+            .Produces<MovieRatingResponse>(StatusCodes.Status200OK)
             .RequireAuthorization();
 
         return app;
