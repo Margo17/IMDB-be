@@ -93,11 +93,20 @@ dotnet test
 
 ### Endpoints
 
+_Movies resource_
 - **GET /api/movies**: Retrieve all movies with pagination, filtering, and sorting.
-- **GET /api/movies/{id}**: Retrieve a movie by ID.
+- **GET /api/movies/{idOrSlug}**: Retrieve a movie by ID or Slug.
 - **POST /api/movies**: Create a new movie.
 - **PUT /api/movies/{id}**: Update a movie by ID.
 - **DELETE /api/movies/{id}**: Delete a movie by ID.
+
+_Ratings resource_
+- **GET /api/ratings/me**: Retrieve user ratings.
+- **PUT /api/movies/{id}/ratings**: Update a movie rating.
+- **DELETE /api/movies/{id}/ratings**: Delete a movie by ID.
+
+_Health check_
+- **GET /_health**: Check api status
 
 ### Authentication
 
