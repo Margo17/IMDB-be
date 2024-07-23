@@ -4,14 +4,14 @@ using IMDB.Application.Repositories;
 
 namespace IMDB.Application.Services;
 
-public class MoveService : IMovieService
+public class MovieService : IMovieService
 {
     private readonly IMovieRepository _movieRepository;
     private readonly IRatingRepository _ratingRepository;
     private readonly IValidator<Movie> _movieValidator;
     private readonly IValidator<GetAllMoviesOptions> _optionsValidator;
 
-    public MoveService(IMovieRepository movieRepository, IRatingRepository ratingRepository,
+    public MovieService(IMovieRepository movieRepository, IRatingRepository ratingRepository,
         IValidator<Movie> movieValidator, IValidator<GetAllMoviesOptions> optionsValidator)
     {
         _movieRepository = movieRepository;

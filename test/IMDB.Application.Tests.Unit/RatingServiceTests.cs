@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using FluentAssertions;
 using FluentAssertions.Specialized;
 using FluentValidation;
@@ -19,7 +18,7 @@ public class RatingServiceTests
     {
         _sut = new RatingService(_ratingRepository, _movieRepository);
     }
-    
+
     [Fact]
     public async Task RateMovieAsync_ShouldThrowValidationExceptionWithCorrectDetails_WhenRatingIsInvalid()
     {
@@ -27,7 +26,7 @@ public class RatingServiceTests
         const int invalidRating = -1;
         const string expectedPropertyName = "rating";
         const string expectedErrorMessage = "The rating must be between 1 and 5";
-        
+
         // Act
         Func<Task> result = async () => await _sut.RateMovieAsync(Arg.Any<Guid>(), invalidRating, Arg.Any<Guid>());
 
@@ -50,10 +49,10 @@ public class RatingServiceTests
         const int movieRating = 5;
         _movieRepository.ExistsByIdAsync(movieId).Returns(true);
         _ratingRepository.RateMovieAsync(movieId, movieRating, userId).Returns(true);
-        
+
         // Act
         bool result = await _sut.RateMovieAsync(movieId, movieRating, userId);
-        
+
         // Assert
         result.Should().BeTrue();
     }
@@ -67,10 +66,10 @@ public class RatingServiceTests
         const int movieRating = 5;
         _movieRepository.ExistsByIdAsync(movieId).Returns(false);
         _ratingRepository.RateMovieAsync(movieId, movieRating, userId).Returns(true);
-        
+
         // Act
         bool result = await _sut.RateMovieAsync(movieId, movieRating, userId);
-        
+
         // Assert
         result.Should().BeFalse();
     }
