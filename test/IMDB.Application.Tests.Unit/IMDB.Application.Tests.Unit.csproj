@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\IMDB.Application\IMDB.Application.csproj" />
+      <ProjectReference Include="..\..\src\IMDB.Application\IMDB.Application.csproj" />
     </ItemGroup>
 
 </Project>
