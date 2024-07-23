@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using FluentAssertions;
 using FluentAssertions.Specialized;
 using FluentValidation;
@@ -38,5 +39,39 @@ public class RatingServiceTests
                 PropertyName = expectedPropertyName,
                 ErrorMessage = expectedErrorMessage
             });
+    }
+
+    [Fact]
+    public async Task RateMovieAsync_ShouldRateMovie_WhenMovieExists()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        Guid movieId = Guid.NewGuid();
+        const int movieRating = 5;
+        _movieRepository.ExistsByIdAsync(movieId).Returns(true);
+        _ratingRepository.RateMovieAsync(movieId, movieRating, userId).Returns(true);
+        
+        // Act
+        bool result = await _sut.RateMovieAsync(movieId, movieRating, userId);
+        
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task RateMovieAsync_ShouldNotRateMovie_WhenNoMovieExistsOrIdIsInvalid()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        Guid movieId = Guid.NewGuid();
+        const int movieRating = 5;
+        _movieRepository.ExistsByIdAsync(movieId).Returns(false);
+        _ratingRepository.RateMovieAsync(movieId, movieRating, userId).Returns(true);
+        
+        // Act
+        bool result = await _sut.RateMovieAsync(movieId, movieRating, userId);
+        
+        // Assert
+        result.Should().BeFalse();
     }
 }
