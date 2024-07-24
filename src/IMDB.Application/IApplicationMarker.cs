@@ -1,5 +1,3 @@
 namespace IMDB.Application;
 
-public interface IApplicationMarker
-{
-}
+public interface IApplicationMarker;
